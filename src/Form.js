@@ -33,10 +33,18 @@ const FormApp = () => {
     }
     const predictModel = async (formData) => {
         try{
-            const response = axios.post('/predict',formData)
-            console.log(response)
+            const data = formData;
+            data.Age = parseInt(formData.Age)
+            data.Dependents = parseInt(formData.Dependents)
+            data.ApplicantIncome = parseInt(formData.ApplicantIncome)
+            data.CoapplicantIncome = parseInt(formData.CoapplicantIncome)
+            data.Loan_Term = parseInt(formData.Loan_Term)
+            data.CreditHistory = parseInt(formData.CreditHistory)
 
-            if(response.status == 200){
+            const response = await axios.post('/predict',data)
+            console.log(response)
+            
+            if(response.status === 200){
                 getResultModel()
             }
         }catch(e){
@@ -175,7 +183,7 @@ const FormApp = () => {
                                 <td>Age</td>
                                 <td>
                                     <Input
-                                        type="text"
+                                        type="number"
                                         name="Age"
                                         placeholder="Enter your age"
                                         onChange={onChange}
